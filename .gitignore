@@ -1,0 +1,6 @@
+/node_modules
+
+# dist will create at build time
+dist
+
+.env
