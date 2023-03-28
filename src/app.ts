@@ -3,6 +3,7 @@ import dbConnect from './config/dbConnect';
 import { config } from "dotenv";
 import authRouter from "./routes/authRoute";
 import userRouter from "./routes/userRoute";
+import adminRouter from "./routes/adminRoute";
 import articleRouter from "./routes/Articles/articleRoute";
 import articlesRouter from "./routes/Articles/articlesRoute";
 import categoryRouter from "./routes/Categories/categoryRoute";
@@ -29,8 +30,11 @@ app.get("/", (req: Request, res: Response) => {
 // serving -  {{newspaper-auth-host}} Create User, Login User
 app.use('/api/auth', authRouter);
 
-// serving -  {{newspaper-user-host}} Get Profile, Update Profile, Delete Profile,
+// serving -  {{newspaper-user-host}} Get Profile, Update Profile
 app.use('/api/user', userRouter);
+
+// serving -  {{newspaper-admin-host}} Get Profile, Update Profile, Delete Profile,
+app.use('/api/admin', adminRouter);
 
 // serving -  article
 app.use('/article', articleRouter);

@@ -8,6 +8,7 @@ const articleSchema = new mongoose.Schema<ArticleModelWithDocument>({
     categories: { type: [Schema.Types.ObjectId], default: [] },
     tags: { type: [Schema.Types.ObjectId], default: [] },
     title: { type: String, require: true },
+    description: { type: String, require: true },
     author: Schema.Types.ObjectId,
     status: {
         type: String,
