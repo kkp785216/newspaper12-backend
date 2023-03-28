@@ -4,17 +4,20 @@ import expressAsyncHandler from 'express-async-handler';
 import { ArticleRequestBody } from 'constants/types';
 import Category from '../../models/categoryModels';
 import Tags from '../../models/tagModels';
-import convertTitleToSlug from '../../utility/formatSlug';
+import convertTitleToSlug from '../../utils/formatSlug';
+import validateMongoDbId from '../../utils/validateMondoDbId';
 
 // add Article 
 const addNewArticle = expressAsyncHandler(
-    async (req: Request<{}, {}, ArticleRequestBody>, res: Response) => {
+    async (req: Request<{}, {}, ArticleRequestBody> & { user?: any }, res: Response) => {
+        const { _id: userId } = req.user;
+        validateMongoDbId(userId as string);
+
         // taking values from request.body
         const {
             categories,
             tags,
             title,
-            author,
             status,
             url,
             imgUrl,
@@ -23,15 +26,15 @@ const addNewArticle = expressAsyncHandler(
             template,
             allowComment
         } = req.body;
-
+        
         // Error Handling
         let errArr = [];
         if (!title) errArr.push("title not provided");
-        if (!author) errArr.push("author not provided");
         if (!title) errArr.push("title not provided");
         if (!url) errArr.push("url not provided");
         if (!imgUrl) errArr.push("image url not provided");
         if (errArr.length > 0) throw new Error(errArr.join(", "));
+
 
         try {
             // checking if categories exist in database
@@ -52,10 +55,10 @@ const addNewArticle = expressAsyncHandler(
 
             // creating a new Article instanse
             const article = new Article({
-                category: categories || [],
+                categories: categories || [],
                 tags: tags || [],
                 title: title,
-                author: author,
+                author: userId,
                 status: status || 'published',
                 url: convertTitleToSlug(url),
                 imgUrl: imgUrl || null,

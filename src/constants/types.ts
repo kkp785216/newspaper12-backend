@@ -4,6 +4,7 @@ type ArticleRequestBody = {
     categories: ObjectId[];
     tags: ObjectId[];
     title: string;
+    description: string;
     author: ObjectId;
     status: 'published' | 'draft';
     views: number;
