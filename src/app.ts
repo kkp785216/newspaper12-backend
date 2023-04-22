@@ -1,13 +1,10 @@
 import express, { Application, Request, Response } from 'express';
 import dbConnect from './config/dbConnect';
 import { config } from "dotenv";
+import publicRouter from "./routes/Public/publicRoute";
 import authRouter from "./routes/authRoute";
-import userRouter from "./routes/userRoute";
-import adminRouter from "./routes/adminRoute";
-import articleRouter from "./routes/Articles/articleRoute";
-import articlesRouter from "./routes/Articles/articlesRoute";
-import categoryRouter from "./routes/Categories/categoryRoute";
-import categoriesRouter from "./routes/Categories/categoriesRoute";
+import userRouter from "./routes/User/userRoute";
+import adminRouter from "./routes/Admin/adminRoute";
 import { errorHandler, notFound } from './middlewares/errorHandler';
 import bodyParser from "body-parser";
 
@@ -27,6 +24,9 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Hello World!");
 });
 
+// serving -  {{newspaper-public-host}} Create User, Login User
+app.use('/api/public', publicRouter);
+
 // serving -  {{newspaper-auth-host}} Create User, Login User
 app.use('/api/auth', authRouter);
 
@@ -35,14 +35,6 @@ app.use('/api/user', userRouter);
 
 // serving -  {{newspaper-admin-host}} Get Profile, Update Profile, Delete Profile,
 app.use('/api/admin', adminRouter);
-
-// serving -  article
-app.use('/article', articleRouter);
-app.use('/articles', articlesRouter);
-
-// serving -  category
-app.use('/category', categoryRouter);
-app.use('/categories', categoriesRouter);
 
 // Error handling
 app.use(notFound);
