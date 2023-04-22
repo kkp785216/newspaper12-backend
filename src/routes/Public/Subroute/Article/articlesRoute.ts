@@ -1,10 +1,10 @@
 import express from 'express';
-import { getAllCategories } from '../../controller/Categories/categoriesCtrl';
+import { getAllArticles } from '../../../../controller/Article/getArticlesCtrl';
 
 const router = express.Router();
 
 // getAllArticles by page and limit query
-router.get("/", getAllCategories);
+router.get("/all", getAllArticles);
 
 
 export default router;
