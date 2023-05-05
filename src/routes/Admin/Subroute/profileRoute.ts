@@ -1,6 +1,10 @@
-import express from 'express';
-import { deleteProfile, getProfile, updateProfile } from '../../../controller/adminCtrl';
-import { authMiddleware, isAdmin } from '../../../middlewares/authMiddleware';
+import express from "express";
+import {
+  deleteProfile,
+  getProfile,
+  updateProfile,
+} from "../../../controller/adminCtrl";
+import { authMiddleware, isAdmin } from "../../../middlewares/authMiddleware";
 
 const router = express.Router();
 
