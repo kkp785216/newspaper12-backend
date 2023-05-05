@@ -1,6 +1,6 @@
-import express from 'express';
-import articleRouter from './Subroute/articleRoute'
-import profileRouter from './Subroute/profileRoute'
+import express from "express";
+import articleRouter from "./Subroute/articleRoute";
+import profileRouter from "./Subroute/profileRoute";
 
 const router = express.Router();
 

@@ -1,8 +1,8 @@
-import express from 'express';
-import articleRouter from './Subroute/Article/articleRoute'
-import articleRouters from './Subroute/Article/articlesRoute'
-import categoryRouter from './Subroute/Category/categoryRoute'
-import categoriesRouter from './Subroute/Category/categoriesRoute'
+import express from "express";
+import articleRouter from "./Subroute/Article/articleRoute";
+import articleRouters from "./Subroute/Article/articlesRoute";
+import categoryRouter from "./Subroute/Category/categoryRoute";
+import categoriesRouter from "./Subroute/Category/categoriesRoute";
 
 const router = express.Router();
 
