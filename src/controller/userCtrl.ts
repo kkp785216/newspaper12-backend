@@ -2,12 +2,17 @@ import { Request, Response } from "express";
 import User from "../models/userModels";
 import expressAsyncHandler from "express-async-handler";
 import validateMongoDbId from "../utils/validateMondoDbId";
+import {
+  UserProfileRequestBody,
+  UserProfileResponse,
+} from "../constants/types";
 
 // Get user profile
 const getProfile = expressAsyncHandler(
-  async (req: Request & { user?: any }, res: Response) => {
+  async (req: Request & { user?: UserProfileResponse }, res: Response) => {
+    if (!req.user?._id) throw new Error("Unauthorized request!");
     const { _id: userId } = req.user;
-    validateMongoDbId(userId as string);
+    validateMongoDbId(userId);
     try {
       const findUser = await User.findById(userId).select("-password");
       if (findUser) {
@@ -25,33 +30,35 @@ const getProfile = expressAsyncHandler(
 
 // Get user profile
 const updateProfile = expressAsyncHandler(
-  async (req: Request & { user?: any }, res: Response) => {
+  async (
+    req: Request<unknown, unknown, UserProfileRequestBody> & {
+      user?: UserProfileResponse;
+    },
+    res: Response
+  ) => {
+    if (!req.user?._id) throw new Error("Unauthorized request!");
     const { _id: userId } = req.user;
-    validateMongoDbId(userId as string);
+    validateMongoDbId(userId);
     const { firstName, lastName, email, mobile } = req.body;
 
     /* Error Handling Start */
     const errors = [];
-    if (firstName && firstName.length < 3)
-      errors.push("FirstName can't be less than 3 characters");
-    if (lastName && lastName.length < 3)
-      errors.push("LastName can't be less than 3 characters");
     if (email) {
-      if (!email.match(/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/))
-        errors.push("Invalid email address");
       if (await User.findOne({ _id: userId, email }))
         errors.push("Email already in use!");
       else if (await User.findOne({ _id: { $ne: userId }, email }))
         errors.push("Email already exists!");
     }
     if (mobile) {
-      if (!mobile.match(/^[0-9]{10}$/)) errors.push("Invalid mobile no.");
       if (await User.findOne({ _id: userId, mobile }))
         errors.push("Mobile already in use!");
       else if (await User.findOne({ _id: { $ne: userId }, mobile }))
         errors.push("Mobile no. already exists!");
     }
-    if (errors.length > 0) throw new Error(errors.join(", "));
+    if (errors.length > 0)
+      throw Object.assign(new Error("Couldn't update profile"), {
+        messages: errors,
+      });
     /* Error Handling Complete */
 
     try {

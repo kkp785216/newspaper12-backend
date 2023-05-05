@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const DB_URI = process.env.DB_URI || "";
+if (!process.env.DB_URI) throw new Error("Mongo URI not found in environment");
+const DB_URI = process.env.DB_URI;
 
 /**
  * @dbConnect this function is used for connect database

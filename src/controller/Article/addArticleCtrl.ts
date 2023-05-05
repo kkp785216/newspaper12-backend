@@ -14,9 +14,8 @@ const addNewArticle = expressAsyncHandler(
     req: Request<{}, {}, ArticleRequestBody> & { user?: UserProfileResponse },
     res: Response
   ) => {
-    if (!req.user?._id) throw new Error("Something went wrong");
+    if (!req.user?._id) throw new Error("Unauthorized request!");
     const { _id: userId } = req.user;
-    console.log(req.user);
     validateMongoDbId(userId);
 
     // taking values from request.body
@@ -36,10 +35,12 @@ const addNewArticle = expressAsyncHandler(
     // Error Handling
     const errArr: string[] = [];
     if (!title) errArr.push("title not provided");
-    if (!title) errArr.push("title not provided");
     if (!url) errArr.push("url not provided");
     if (!imgUrl) errArr.push("image url not provided");
-    if (errArr.length > 0) throw new Error(errArr.join(", "));
+    if (errArr.length > 0)
+      throw Object.assign(new Error("Couldn't posted article"), {
+        messages: errArr,
+      });
 
     try {
       // checking if categories exist in database

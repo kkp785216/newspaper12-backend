@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose"; // Erase if already required
-import type { TagRequestBody } from "./../constants/types";
+import type { TagRequestBody } from "../constants/types";
 
 interface TagModelWithDocument extends TagRequestBody, Document {}
 

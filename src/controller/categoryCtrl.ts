@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Category from "../models/categoryModels";
 import expressAsyncHandler from "express-async-handler";
-import type { CategoryRequestBody } from "constants/types";
+import type { CategoryRequestBody } from "../constants/types";
 import convertTitleToSlug from "../utils/formatSlug";
 
 // add new Category

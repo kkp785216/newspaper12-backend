@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { Types } from "mongoose";
+import { ObjectId } from "mongoose";
 
 const JWT_SECRET = process.env.JWT_SECRET || "mySecret";
 
@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "mySecret";
  * @returns JWT Token
  */
 // const generateToken = (id: Types.ObjectId) => {
-const generateToken = (id: Types.ObjectId) => {
+const generateToken = (id: ObjectId) => {
   return jwt.sign({ id }, JWT_SECRET, { expiresIn: "3d" });
 };
 

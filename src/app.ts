@@ -10,7 +10,7 @@ const app: Application = express();
 const PORT = process.env.PORT || 3000;
 
 // for connecting database
-dbConnect();
+void dbConnect();
 
 // RequestBodyParser - it parse api request body
 app.use(express.json());

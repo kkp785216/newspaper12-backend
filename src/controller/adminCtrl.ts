@@ -2,11 +2,12 @@ import { Request, Response } from "express";
 import User from "../models/userModels";
 import expressAsyncHandler from "express-async-handler";
 import validateMongoDbId from "../utils/validateMondoDbId";
+import { UserProfileRequestBody } from "../constants/types";
 
 // Get user profile
 const getProfile = expressAsyncHandler(async (req: Request, res: Response) => {
   const { id: userId } = req.params;
-  validateMongoDbId(userId as string);
+  validateMongoDbId(userId);
   try {
     const findUser = await User.findById(userId).select("-password");
     if (findUser) {
@@ -23,27 +24,23 @@ const getProfile = expressAsyncHandler(async (req: Request, res: Response) => {
 
 // Get user profile
 const updateProfile = expressAsyncHandler(
-  async (req: Request, res: Response) => {
+  async (
+    req: Request<{ id: string }, unknown, UserProfileRequestBody>,
+    res: Response
+  ) => {
     const { id: userId } = req.params;
-    validateMongoDbId(userId as string);
+    validateMongoDbId(userId);
     const { firstName, lastName, email, mobile } = req.body;
 
     /* Error Handling Start */
     const errors = [];
-    if (firstName && firstName.length < 3)
-      errors.push("FirstName can't be less than 3 characters");
-    if (lastName && lastName.length < 3)
-      errors.push("LastName can't be less than 3 characters");
     if (email) {
-      if (!email.match(/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/))
-        errors.push("Invalid email address");
       if (await User.findOne({ _id: userId, email }))
         errors.push("Email already in use!");
       else if (await User.findOne({ _id: { $ne: userId }, email }))
         errors.push("Email already exists!");
     }
     if (mobile) {
-      if (!mobile.match(/^[0-9]{10}$/)) errors.push("Invalid mobile no.");
       if (await User.findOne({ _id: userId, mobile }))
         errors.push("Mobile already in use!");
       else if (await User.findOne({ _id: { $ne: userId }, mobile }))
@@ -78,7 +75,7 @@ const updateProfile = expressAsyncHandler(
 const deleteProfile = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const { id: userId } = req.params;
-    validateMongoDbId(userId as string);
+    validateMongoDbId(userId);
     try {
       const findUser = await User.findByIdAndDelete(userId).select("-password");
       if (findUser) {

@@ -1,9 +1,4 @@
-import type {
-  ErrorRequestHandler,
-  NextFunction,
-  Request,
-  Response,
-} from "express";
+import type { NextFunction, Request, Response } from "express";
 
 /**
  * Not Found
@@ -19,16 +14,15 @@ const notFound = (req: Request, res: Response, next: NextFunction) => {
  * Error Handler
  */
 const errorHandler = (
-  err: any,
-  req: Request,
+  err: Error,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _next: NextFunction
 ) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode);
-  res.json({
-    message: err.toString(),
-  });
+  res.json(err);
 };
 
 export { notFound, errorHandler };

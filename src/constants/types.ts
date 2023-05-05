@@ -38,6 +38,7 @@ type UserProfileResponse = {
   firstName: string;
   lastName?: string;
   email: string;
+  mobile: string;
   password: string;
   role: "user" | "admin";
 };

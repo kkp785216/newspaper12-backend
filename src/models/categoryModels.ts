@@ -1,5 +1,5 @@
 import mongoose, { Document } from "mongoose"; // Erase if already required
-import type { CategoryRequestBody } from "./../constants/types";
+import type { CategoryRequestBody } from "../constants/types";
 
 interface CategoryModelWithDocument extends CategoryRequestBody, Document {}
 

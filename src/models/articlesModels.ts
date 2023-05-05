@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose"; // Erase if already required
-import type { ArticleRequestBody } from "./../constants/types";
+import type { ArticleRequestBody } from "../constants/types";
 
 interface ArticleModelWithDocument extends ArticleRequestBody, Document {}
 
@@ -8,7 +8,11 @@ const articleSchema = new mongoose.Schema<ArticleModelWithDocument>(
   {
     categories: { type: [Schema.Types.ObjectId], default: [] },
     tags: { type: [Schema.Types.ObjectId], default: [] },
-    title: { type: String, require: true },
+    title: {
+      type: String,
+      require: true,
+      message: "title not provided",
+    },
     description: { type: String, require: true },
     author: Schema.Types.ObjectId,
     status: {
@@ -21,7 +25,12 @@ const articleSchema = new mongoose.Schema<ArticleModelWithDocument>(
       default: "published",
     },
     views: { type: Number, default: 0 },
-    url: { type: String, require: true, unique: true },
+    url: {
+      type: String,
+      require: true,
+      unique: true,
+      message: "url not provided",
+    },
     imgUrl: { type: String, default: null },
     content: { type: String, require: true },
     contentType: {
