@@ -5,7 +5,6 @@ import authRouter from "./routes/authRoute";
 import userRouter from "./routes/User/userRoute";
 import adminRouter from "./routes/Admin/adminRoute";
 import { errorHandler, notFound } from "./middlewares/errorHandler";
-import bodyParser from "body-parser";
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 dbConnect();
 
 // RequestBodyParser - it parse api request body
-app.use(bodyParser.json());
+app.use(express.json());
 
 // serving -  {{newspaper-public-host}} Create User, Login User
 app.use("/api/public", publicRouter);
@@ -27,10 +26,6 @@ app.use("/api/user", userRouter);
 
 // serving -  {{newspaper-admin-host}} Get Profile, Update Profile, Delete Profile,
 app.use("/api/admin", adminRouter);
-
-app.get("*", (_, res) => {
-  res.status(400).send({ Error: "page not found" });
-});
 
 // Error handling
 app.use(notFound);

@@ -10,8 +10,8 @@ const deleteSingleArticle = expressAsyncHandler(
       if (!req.params.slug) throw new Error("Slug is required");
       const article = await Article.findOneAndDelete({ url: req.params.slug });
       res.status(200).json(article);
-    } catch (error: any) {
-      throw new Error(error);
+    } catch (error) {
+      throw new Error(error as string);
     }
   }
 );

@@ -16,8 +16,8 @@ const getProfile = expressAsyncHandler(async (req: Request, res: Response) => {
       // User already exist
       throw new Error("User doesn't exist");
     }
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error) {
+    throw new Error(error as string);
   }
 });
 
@@ -68,8 +68,8 @@ const updateProfile = expressAsyncHandler(
         // User doesn't exist
         throw new Error("User doesn't exist");
       }
-    } catch (error: any) {
-      throw new Error(error);
+    } catch (error) {
+      throw new Error(error as string);
     }
   }
 );
@@ -88,8 +88,8 @@ const deleteProfile = expressAsyncHandler(
         // User already exist
         throw new Error("User doesn't exist");
       }
-    } catch (error: any) {
-      throw new Error(error);
+    } catch (error) {
+      throw new Error(error as string);
     }
   }
 );

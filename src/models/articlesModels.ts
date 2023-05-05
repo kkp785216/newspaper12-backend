@@ -14,16 +14,22 @@ const articleSchema = new mongoose.Schema<ArticleModelWithDocument>(
     status: {
       type: String,
       require: true,
-      enum: ["published", "draft"],
+      enum: {
+        values: ["published", "draft"],
+        message: "status '{VALUE}' is not supported",
+      },
       default: "published",
     },
-    views: { type: Number, require: true, default: 0 },
+    views: { type: Number, default: 0 },
     url: { type: String, require: true, unique: true },
     imgUrl: { type: String, default: null },
     content: { type: String, require: true },
     contentType: {
       type: String,
-      enum: ["common", "video", "audio", "news"],
+      enum: {
+        values: ["post", "video", "audio", "news"],
+        message: "contentType '{VALUE}' is not supported",
+      },
       default: "common",
     },
     template: { type: Number, default: 0 },

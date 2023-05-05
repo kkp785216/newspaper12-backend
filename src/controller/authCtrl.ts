@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/userModels";
 import expressAsyncHandler from "express-async-handler";
-import type { LoginRequestBody } from "constants/types";
+import type { LoginRequestBody } from "../constants/types";
 import { generateToken } from "../config/jwtToken";
 
 // Create a new user

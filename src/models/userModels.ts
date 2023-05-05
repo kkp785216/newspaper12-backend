@@ -1,6 +1,6 @@
 import mongoose from "mongoose"; // Erase if already required
 import bcrypt from "bcrypt";
-import type { UserProfileResponse } from "constants/types";
+import type { UserProfileResponse } from "../constants/types";
 
 type TypeAuthUser = UserProfileResponse & {
   isPasswordMatched: (inputPassword: string) => Promise<boolean>;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Article from "../../models/articlesModels";
 import expressAsyncHandler from "express-async-handler";
-import { ArticleRequestBody } from "constants/types";
+import { ArticleRequestBody, UserProfileResponse } from "../../constants/types";
 import Category from "../../models/categoryModels";
 import Tags from "../../models/tagModels";
 import convertTitleToSlug from "../../utils/formatSlug";
@@ -11,11 +11,13 @@ import validateMongoDbId from "../../utils/validateMondoDbId";
 const addNewArticle = expressAsyncHandler(
   async (
     // eslint-disable-next-line @typescript-eslint/ban-types
-    req: Request<{}, {}, ArticleRequestBody> & { user?: any },
+    req: Request<{}, {}, ArticleRequestBody> & { user?: UserProfileResponse },
     res: Response
   ) => {
+    if (!req.user?._id) throw new Error("Something went wrong");
     const { _id: userId } = req.user;
-    validateMongoDbId(userId as string);
+    console.log(req.user);
+    validateMongoDbId(userId);
 
     // taking values from request.body
     const {
@@ -32,7 +34,7 @@ const addNewArticle = expressAsyncHandler(
     } = req.body;
 
     // Error Handling
-    const errArr = [];
+    const errArr: string[] = [];
     if (!title) errArr.push("title not provided");
     if (!title) errArr.push("title not provided");
     if (!url) errArr.push("url not provided");

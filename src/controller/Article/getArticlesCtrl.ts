@@ -49,8 +49,8 @@ const getAllArticles = expressAsyncHandler(
         maxLimit: maxLimit,
         totalArticles: count,
       });
-    } catch (error: any) {
-      throw new Error(error);
+    } catch (error) {
+      throw new Error(error as string);
     }
   }
 );
@@ -63,8 +63,8 @@ const getSingleArticle = expressAsyncHandler(
       if (!req.params.slug) throw new Error("Slug is required");
       const article = await Article.findOne({ url: req.params.slug });
       res.status(200).json(article);
-    } catch (error: any) {
-      throw new Error(error);
+    } catch (error) {
+      throw new Error(error as string);
     }
   }
 );

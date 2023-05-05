@@ -10,8 +10,8 @@ const getAllCategories = expressAsyncHandler(
     try {
       const categories = await Category.find();
       res.status(200).json(categories);
-    } catch (error: any) {
-      throw new Error(error);
+    } catch (error) {
+      throw new Error(error as string);
     }
   }
 );
@@ -23,8 +23,8 @@ const getSingleCategory = expressAsyncHandler(
     try {
       const category = await Category.findById(categoryId);
       res.status(200).json(category);
-    } catch (error: any) {
-      throw new Error(error);
+    } catch (error) {
+      throw new Error(error as string);
     }
   }
 );
@@ -52,8 +52,8 @@ const addNewCategory = expressAsyncHandler(
       //saving to database
       const response = await category.save();
       res.status(200).json(response);
-    } catch (error: any) {
-      throw new Error(error);
+    } catch (error) {
+      throw new Error(error as string);
     }
   }
 );

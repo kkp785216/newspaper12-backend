@@ -31,6 +31,8 @@ type LoginRequestBody = {
   password: string;
 };
 
+type UserProfileRequestBody = Omit<UserProfileResponse, "_id">;
+
 type UserProfileResponse = {
   _id: ObjectId;
   firstName: string;
@@ -47,4 +49,5 @@ export type {
   TagRequestBody,
   LoginRequestBody,
   UserProfileResponse,
+  UserProfileRequestBody,
 };
