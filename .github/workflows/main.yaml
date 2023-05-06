@@ -1,32 +1,36 @@
 name: Build and deploy
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
     - name: Install dependencies
       run: npm install
-    - name: Build
+
+    - name: Build code
       run: npm run build
-    - name: Copy package.json to production folder
-      run: cp package.json production/
-    - name: Copy files to production folder
+
+    - name: Copy dist, package.json, and vercel.json to production branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        mkdir -p production
-        cp -R dist/* production/
-        cp production-package.json production/
-        cp vercel.json production/
-    - name: Commit and push changes
-      uses: EndBug/add-and-commit@v7
-      with:
-        message: "Build and deploy"
-        add: "production/*"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        branch: production
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git checkout production
+        git rm -rf .
+        git clean -fxd
+        cp -R dist/* .
+        cp package.json .
+        cp vercel.json .
+        git add -A
+        git commit -m "Deploy build artifacts to production"
+        git push origin production
