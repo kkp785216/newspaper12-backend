@@ -13,6 +13,7 @@
     "start:dev": "env-cmd -f environments/dev.env node dist/app.js",
     "start": "env-cmd -f environments/prod.env node dist/app.js",
     "dev": "env-cmd -f environments/dev.env nodemon src/app.ts",
+    "dev:webpack": "env-cmd -f environments/dev.env webpack-dev-server --mode development --open --hot",
     "build": "npm run lint && npm run webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
