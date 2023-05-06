@@ -26,18 +26,36 @@ jobs:
     - name: Create and switch to production branch
       run: |
         git checkout -b production
+        sed -i '/^dist$/d' .gitignore
+        git add .
+        git commit -m "dist folder added for staging"
       
-    - name: Copy production files to new branch
+    - name: Prepering required files into production folder
       run: |
         mkdir production
         cp -r dist production/
         cp package.json production/
         jq 'del(.devDependencies)' < package.json | jq 'del(.scripts)' > production/package.json
         cp vercel.json production/
+
+    - name: Delete unnecessary files
+      run: |
+        find . -maxdepth 1 ! -name ".git" ! -name ".gitignore" ! -name "production" -exec rm -rf {} +
+        
+    - name: Delete unnecessary folders
+      run: |
+        find . -type d -maxdepth 1 ! -name ".git" ! -name "production" -exec rm -rf {} +
+        
+    - name: Delete .gitkeep files
+      run: |
+        find . -name ".gitkeep" -delete
+        
+    - name: Delete dist folder
+      run: |
+        rm -rf dist/
+
+    - name: Copy production files to new branch
         git add production
         git commit -m "Add production files"
         git push --force origin production
         
-    - name: Delete production folder
-      run: |
-        rm -rf production/
