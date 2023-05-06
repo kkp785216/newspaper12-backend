@@ -55,6 +55,7 @@ jobs:
         rm -rf dist/
 
     - name: Copy production files to new branch
+      run: |
         git add production
         git commit -m "Add production files"
         git push --force origin production
