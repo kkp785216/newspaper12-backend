@@ -16,7 +16,7 @@ type ArticleRequestBody = {
   allowComment: boolean;
 };
 
-type ContentType = "common" | "video" | "audio" | "news";
+type ContentType = "post" | "video" | "audio" | "news";
 
 type CategoryRequestBody = {
   name: string;
