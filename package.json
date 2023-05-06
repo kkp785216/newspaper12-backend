@@ -18,7 +18,7 @@
     "prepare": "husky install",
     "ts-build": "echo Started Building... && tsc -p . && echo Completed Building",
     "lint": "echo Starting ESLint... && eslint . --ext .ts",
-    "webpack": "webpack"
+    "webpack": "echo Started Building... && webpack && echo Completed Building"
   },
   "keywords": [],
   "author": "",
