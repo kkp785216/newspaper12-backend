@@ -1,6 +1,8 @@
 import express from "express";
 import articleRouter from "./Subroute/articleRoute";
 import profileRouter from "./Subroute/profileRoute";
+import { createUserByAdmin, loginAdmin } from "../../controller/authCtrl";
+import { authMiddleware, isAdmin } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 
@@ -9,5 +11,11 @@ router.use("/article", articleRouter);
 
 // request and route for get user Profile
 router.use("/profile", profileRouter);
+
+// request and route for get user Profile
+router.post("/register", authMiddleware, isAdmin, createUserByAdmin);
+
+// request and route for get user Profile
+router.post("/login", loginAdmin);
 
 export default router;

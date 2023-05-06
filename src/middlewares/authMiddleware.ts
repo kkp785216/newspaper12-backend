@@ -39,8 +39,8 @@ const authMiddleware = expressAsyncHandler(
 
 const isAdmin = expressAsyncHandler(
   async (req: Request & { user?: UserProfileResponse }, _res, next) => {
-    if (!req.user) throw new Error("No user received!");
     try {
+      if (!req.user) throw new Error("No user received!");
       const { _id: userId } = req.user;
       const adminUser: UserProfileResponse | null = await Users.findById(
         userId
