@@ -13,21 +13,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: npm install
+    - name: Print current branch
+      run: echo "Current branch is $(git rev-parse --abbrev-ref HEAD)"
 
-    - name: Build code
-      run: npm run build
+    - name: Switch to production branch
+      run: git checkout production
+
+    - name: Print current branch after checkout
+      run: echo "Current branch is $(git rev-parse --abbrev-ref HEAD)"
+
+    - name: Remove existing files
+      run: |
+        git rm -rf .
+        git clean -fxd
 
     - name: Copy dist, package.json, and vercel.json to production branch
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
-        git checkout production
-        git rm -rf .
-        git clean -fxd
         cp -R dist/* .
         cp package.json .
         cp vercel.json .
