@@ -19,6 +19,7 @@ jobs:
       run: |
         mkdir -p production
         cp -R dist/* production/
+        cp production-package.json production/
         cp vercel.json production/
     - name: Commit and push changes
       uses: EndBug/add-and-commit@v7
