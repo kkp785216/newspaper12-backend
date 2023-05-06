@@ -9,7 +9,7 @@ import { errorHandler, notFound } from "./middlewares/errorHandler";
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
 
-// for connecting database
+// for connecting mongodb database
 void dbConnect();
 
 // RequestBodyParser - it parse api request body
