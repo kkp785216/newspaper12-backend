@@ -33,4 +33,4 @@ jobs:
           git config user.name "Your Name"
           git add production
           git commit -m "Build production assets"
-          git push https://${{ secrets.PAT }}@github.com/kkp785216/repository.git HEAD:production
+          git push https://${{ secrets.PAT }}@github.com/kkp785216/newspaper12-backend.git HEAD:production
