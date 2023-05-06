@@ -31,7 +31,7 @@ jobs:
         echo "!dist/" >> .gitignore
         echo "!package.json" >> .gitignore
         echo "!vercel.json" >> .gitignore
-        git add .
+        git add -f production .gitignore
         git commit -m "dist folder added for staging"
       
     - name: Prepering required files into production folder
