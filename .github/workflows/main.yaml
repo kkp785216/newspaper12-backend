@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy Production Branch
 
 on:
   push:
@@ -8,29 +8,32 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Install Node.js and NPM
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
-      - name: Install dependencies
-        run: npm install
-      - name: Build the project
-        run: npm run build
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get -y install jq
-      - name: Build and Deploy
-        run: |
-          mkdir -p production
-          cp -R dist/* production/
-          cat package.json | jq -c 'del(.devDependencies, .scripts)' > production/package.json
-          cp vercel.json production/
-          git config user.email "you@example.com"
-          git config user.name "Your Name"
-          git add production
-          git commit -m "Build production assets"
-          git push https://${{ secrets.PAT }}@github.com/kkp785216/newspaper12-backend.git HEAD:production
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+      
+    - name: Install dependencies and build project
+      run: |
+        npm install
+        npm run build
+        
+    - name: Create and switch to production branch
+      run: |
+        git checkout -b production
+        git push --set-upstream origin production
+      
+    - name: Copy production files to new branch
+      run: |
+        mkdir production
+        cp -r dist production/
+        cp package.json production/
+        jq 'del(.devDependencies)' < package.json | jq 'del(.scripts)' > production/package.json
+        cp vercel.json production/
+        git add -A
+        git commit -m "Add production files"
+        git push --force origin production:main
+        
+    - name: Delete production folder
+      run: |
+        rm -rf production/
