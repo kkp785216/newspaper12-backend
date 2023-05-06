@@ -25,13 +25,13 @@ jobs:
         
     - name: Create and switch to production branch
       run: |
-        git checkout -b Production
+        git checkout -b production
         sed -i '/^dist$/d' .gitignore
         echo "*" > .gitignore
         echo "!dist/" >> .gitignore
         echo "!package.json" >> .gitignore
         echo "!vercel.json" >> .gitignore
-        git add -f production .gitignore
+        git add .
         git commit -m "dist folder added for staging"
       
     - name: Prepering required files into production folder
@@ -48,7 +48,7 @@ jobs:
 
     - name: Copy production files to new branch
       run: |
-        git add production
+        git add -f production .gitignore
         git commit -m "Add production files"
         git push --force origin production
         
