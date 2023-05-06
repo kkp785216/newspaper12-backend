@@ -14,7 +14,7 @@ jobs:
     - name: Build
       run: npm run build
     - name: Create production package.json
-      run: npm prune --production --omit=devDependencies,scripts && cp package.json production/ && mv production/package.json production/production-package.json
+      run: npm prune --production --omit=dev && cp package.json production/ && mv production/package.json production/production-package.json
     - name: Copy files to production folder
       run: |
         mkdir -p production
