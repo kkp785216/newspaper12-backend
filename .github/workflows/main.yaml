@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set user identity
+      run: |
+        git config --global user.email "kkp785216@gmail.com"
+        git config --global user.name "Krishna Kumar Prajapati"
+        
     - name: Checkout the repository
       uses: actions/checkout@v2
       
