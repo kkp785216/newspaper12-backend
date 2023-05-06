@@ -5,6 +5,10 @@ import authRouter from "./routes/authRoute";
 import userRouter from "./routes/User/userRoute";
 import adminRouter from "./routes/Admin/adminRoute";
 import { errorHandler, notFound } from "./middlewares/errorHandler";
+import fs from "fs";
+
+fs.writeFileSync("file.txt", "Hello this is Krishna", "utf-8");
+console.log(fs.readFileSync("file.txt", "utf-8"));
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
