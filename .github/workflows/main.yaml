@@ -26,7 +26,6 @@ jobs:
     - name: Create and switch to production branch
       run: |
         git checkout -b production
-        git push --set-upstream origin production
       
     - name: Copy production files to new branch
       run: |
@@ -35,9 +34,9 @@ jobs:
         cp package.json production/
         jq 'del(.devDependencies)' < package.json | jq 'del(.scripts)' > production/package.json
         cp vercel.json production/
-        git add -A
+        git add production
         git commit -m "Add production files"
-        git push --force origin production:main
+        git push --force origin production
         
     - name: Delete production folder
       run: |
