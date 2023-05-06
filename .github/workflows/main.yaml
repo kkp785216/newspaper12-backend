@@ -13,8 +13,8 @@ jobs:
       run: npm install
     - name: Build
       run: npm run build
-    - name: Create production package.json
-      run: npm prune --production --omit=dev && cp package.json production/ && mv production/package.json production/production-package.json
+    - name: Copy package.json to production folder
+      run: cp package.json production/
     - name: Copy files to production folder
       run: |
         mkdir -p production
