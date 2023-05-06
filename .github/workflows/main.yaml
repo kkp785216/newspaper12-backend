@@ -17,7 +17,8 @@ jobs:
       run: npm prune --production --omit=devDependencies,scripts && cp package.json production/ && mv production/package.json production/production-package.json
     - name: Copy files to production folder
       run: |
-        cp -R dist/ production/
+        mkdir -p production
+        cp -R dist/* production/
         cp vercel.json production/
     - name: Commit and push changes
       uses: EndBug/add-and-commit@v7
