@@ -1,5 +1,5 @@
 import express from "express";
-import { getSingleArticle } from "../../../../controller/Article/getArticlesCtrl";
+import { getSingleArticle } from "../../../../controller/Article/getArticlesCtrl/getSingleArticle";
 
 const router = express.Router();
 
