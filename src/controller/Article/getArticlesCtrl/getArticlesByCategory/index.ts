@@ -9,9 +9,8 @@ import CategoryModels from "../../../../models/categoryModels";
 
 // Get Articles by categories
 const getArticlesByCategory = expressAsyncHandler(
-  // eslint-disable-next-line @typescript-eslint/ban-types
   async (
-    req: Request<{}, {}, {}, GetArticlesByCategoryRequestBody>,
+    req: Request<unknown, unknown, unknown, GetArticlesByCategoryRequestBody>,
     res: Response
   ) => {
     try {

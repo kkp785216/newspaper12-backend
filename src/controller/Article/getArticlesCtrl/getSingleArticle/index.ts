@@ -8,8 +8,10 @@ type SingleArticleReqQeury = {
 
 // Get Articles by queries
 const getSingleArticle = expressAsyncHandler(
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  async (req: Request<SingleArticleReqQeury, {}, {}, {}>, res: Response) => {
+  async (
+    req: Request<SingleArticleReqQeury, unknown, unknown, unknown>,
+    res: Response
+  ) => {
     try {
       if (!req.params.slug) throw new Error("Slug is required");
       const article = await Article.findOne({ url: req.params.slug });

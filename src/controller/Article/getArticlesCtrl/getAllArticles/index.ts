@@ -7,9 +7,8 @@ import { handleLimit } from "../_helper/handleLimit";
 
 // Get Articles by queries
 const getAllArticles = expressAsyncHandler(
-  // eslint-disable-next-line @typescript-eslint/ban-types
   async (
-    req: Request<{}, {}, {}, GetAllArticlesRequestBody>,
+    req: Request<unknown, unknown, unknown, GetAllArticlesRequestBody>,
     res: Response
   ) => {
     try {

@@ -13,7 +13,9 @@ import validateMongoDbId from "../../utils/validateMondoDbId";
 const addNewArticle = expressAsyncHandler(
   async (
     // eslint-disable-next-line @typescript-eslint/ban-types
-    req: Request<{}, {}, ArticleRequestBody> & { user?: UserProfileResponse },
+    req: Request<unknown, unknown, ArticleRequestBody> & {
+      user?: UserProfileResponse;
+    },
     res: Response
   ) => {
     try {

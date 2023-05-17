@@ -17,8 +17,10 @@ const getAllCategories = expressAsyncHandler(
 );
 
 const getSingleCategory = expressAsyncHandler(
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  async (req: Request<{ id: string }, {}, {}, {}>, res: Response) => {
+  async (
+    req: Request<{ id: string }, unknown, unknown, unknown>,
+    res: Response
+  ) => {
     const categoryId = req.params.id;
     try {
       const category = await Category.findById(categoryId);
@@ -31,8 +33,10 @@ const getSingleCategory = expressAsyncHandler(
 
 // add new Category
 const addNewCategory = expressAsyncHandler(
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  async (req: Request<{}, {}, CategoryRequestBody>, res: Response) => {
+  async (
+    req: Request<unknown, unknown, CategoryRequestBody>,
+    res: Response
+  ) => {
     // taking value from req.body
     const { name, slug, description } = req.body;
 
