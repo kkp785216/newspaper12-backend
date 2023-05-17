@@ -6,8 +6,17 @@ interface TagModelWithDocument extends TagRequestBody, Document {}
 // Declare the Schema of the Articles Model
 const tagSchema = new mongoose.Schema<TagModelWithDocument>(
   {
-    name: { type: String, require: true },
-    slug: { type: String, require: true, unique: true },
+    name: {
+      type: String,
+      require: true,
+      message: "tag name not provided",
+    },
+    slug: {
+      type: String,
+      require: true,
+      unique: true,
+      message: "slug not provided",
+    },
     description: { type: String, default: null },
   },
   { timestamps: true }
