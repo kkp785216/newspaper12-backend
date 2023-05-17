@@ -54,3 +54,4 @@ const articleSchema = new mongoose.Schema<ArticleModelWithDocument>(
 );
 
 export default mongoose.model("Article", articleSchema);
+export type { ArticleModelWithDocument };

@@ -1,16 +1,20 @@
 import { Request, Response } from "express";
-import Article from "../../models/articlesModels";
 import expressAsyncHandler from "express-async-handler";
+import Article from "../../../../models/articlesModels";
+
+type SingleArticleReqQeury = {
+  slug: string;
+};
 
 // Get Articles by queries
-const deleteSingleArticle = expressAsyncHandler(
+const getSingleArticle = expressAsyncHandler(
   async (
-    req: Request<{ slug: string }, unknown, unknown, unknown>,
+    req: Request<SingleArticleReqQeury, unknown, unknown, unknown>,
     res: Response
   ) => {
     try {
       if (!req.params.slug) throw new Error("Slug is required");
-      const article = await Article.findOneAndDelete({ url: req.params.slug });
+      const article = await Article.findOne({ url: req.params.slug });
       res.status(200).json(article);
     } catch (error) {
       throw new Error(error as string);
@@ -18,4 +22,4 @@ const deleteSingleArticle = expressAsyncHandler(
   }
 );
 
-export { deleteSingleArticle };
+export { getSingleArticle };

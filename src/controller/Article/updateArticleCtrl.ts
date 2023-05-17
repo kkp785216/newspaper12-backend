@@ -7,9 +7,12 @@ import Tags from "../../models/tagModels";
 import convertTitleToSlug from "../../utils/formatSlug";
 import validateMongoDbId from "../../utils/validateMondoDbId";
 
+/* TO DO: make it for update article it is currently for add article */
+
 // add Article
 const addNewArticle = expressAsyncHandler(
   async (
+    // eslint-disable-next-line @typescript-eslint/ban-types
     req: Request<unknown, unknown, ArticleRequestBody> & {
       user?: UserProfileResponse;
     },

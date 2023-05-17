@@ -79,8 +79,7 @@ const loginUser = expressAsyncHandler(
 // Create a new user
 const createUserByAdmin = expressAsyncHandler(
   async (
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    req: Request<{}, {}, UserProfileRequestBody> & {
+    req: Request<unknown, unknown, UserProfileRequestBody> & {
       user?: UserProfileResponse;
     },
     res: Response

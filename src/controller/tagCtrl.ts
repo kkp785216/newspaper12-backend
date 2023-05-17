@@ -1,30 +1,28 @@
 import { Request, Response } from "express";
-import Category from "../models/categoryModels";
+import TagModel from "../models/tagModels";
 import expressAsyncHandler from "express-async-handler";
 import type { CategoryRequestBody } from "../constants/types";
 import convertTitleToSlug from "../utils/formatSlug";
 
 // add new Category
-const getAllCategories = expressAsyncHandler(
-  async (req: Request, res: Response) => {
-    try {
-      const categories = await Category.find();
-      res.status(200).json(categories);
-    } catch (error) {
-      throw new Error(error as string);
-    }
+const getAllTags = expressAsyncHandler(async (req: Request, res: Response) => {
+  try {
+    const tags = await TagModel.find();
+    res.status(200).json(tags);
+  } catch (error) {
+    throw new Error(error as string);
   }
-);
+});
 
-const getSingleCategory = expressAsyncHandler(
+const getSingleTag = expressAsyncHandler(
   async (
     req: Request<{ id: string }, unknown, unknown, unknown>,
     res: Response
   ) => {
-    const categoryId = req.params.id;
+    const tagId = req.params.id;
     try {
-      const category = await Category.findById(categoryId);
-      res.status(200).json(category);
+      const tag = await TagModel.findById(tagId);
+      res.status(200).json(tag);
     } catch (error) {
       throw new Error(error as string);
     }
@@ -32,7 +30,7 @@ const getSingleCategory = expressAsyncHandler(
 );
 
 // add new Category
-const addNewCategory = expressAsyncHandler(
+const addNewTag = expressAsyncHandler(
   async (
     req: Request<unknown, unknown, CategoryRequestBody>,
     res: Response
@@ -42,13 +40,13 @@ const addNewCategory = expressAsyncHandler(
 
     // error handling
     const errArray = [];
-    if (!name) errArray.push("name not provided");
+    if (!name) errArray.push("tag name not provided");
     if (!slug) errArray.push("slug not provided");
     if (errArray.length > 0) throw new Error(errArray.join(", "));
 
     try {
       // creating new category instanse
-      const category = new Category({
+      const category = new TagModel({
         name: name,
         slug: convertTitleToSlug(slug),
         description: description || null,
@@ -62,4 +60,4 @@ const addNewCategory = expressAsyncHandler(
   }
 );
 
-export { getAllCategories, getSingleCategory, addNewCategory };
+export { getAllTags, getSingleTag, addNewTag };

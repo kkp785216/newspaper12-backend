@@ -4,6 +4,7 @@
  */
 function convertTitleToSlug(title: string) {
   // Convert special characters to their ASCII equivalents
+  console.log(title);
   const slug = title
     .trim()
     .toLowerCase()
