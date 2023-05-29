@@ -13,6 +13,6 @@ router.post("/", authMiddleware, isAdmin, addNewArticle);
 router.put("/:slug", authMiddleware, isAdmin, updateArticle);
 
 // request and route for delete user profile
-router.delete("/", authMiddleware, isAdmin, deleteSingleArticle);
+router.delete("/:slug", authMiddleware, isAdmin, deleteSingleArticle);
 
 export default router;

@@ -1,10 +1,17 @@
 import express from "express";
-import { addNewCategory } from "../../../controller/categoryCtrl";
+import {
+  addNewTag,
+  getAllTags,
+  getSingleTag,
+} from "../../../controller/tagCtrl";
 import { authMiddleware, isAdmin } from "../../../middlewares/authMiddleware";
 
 const router = express.Router();
 
-// getAllArticles by page and limit query
-router.post("/", authMiddleware, isAdmin, addNewCategory);
+router.get("/", getAllTags);
+
+router.get("/:id", getSingleTag);
+
+router.post("/", authMiddleware, isAdmin, addNewTag);
 
 export default router;

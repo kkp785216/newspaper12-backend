@@ -50,7 +50,7 @@ const updateArticle = expressAsyncHandler(
         const checkTags = await Tags.find({
           _id: { $in: tags },
         });
-        if (checkTags.length !== categories.length)
+        if (checkTags.length !== tags.length)
           throw new Error("Tags doesn't exist");
       }
 
