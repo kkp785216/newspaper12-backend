@@ -16,6 +16,12 @@ type ArticleRequestBody = {
   allowComment: boolean;
 };
 
+type GetAllArticlesResponse = {
+  categories: CategoryRequestBody;
+  tags: TagRequestBody;
+  author: Omit<UserProfileResponse, "role" | "password">;
+} & Omit<ArticleRequestBody, "categories" | "tags" | "author">;
+
 type ContentType = "post" | "video" | "audio" | "news";
 
 type CategoryRequestBody = {
@@ -45,6 +51,7 @@ type UserProfileResponse = {
 
 export type {
   ArticleRequestBody,
+  GetAllArticlesResponse,
   ContentType,
   CategoryRequestBody,
   TagRequestBody,

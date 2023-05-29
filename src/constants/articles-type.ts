@@ -8,4 +8,12 @@ type GetArticlesByCategoryRequestBody = GetAllArticlesRequestBody & {
   category: string;
 };
 
-export type { GetAllArticlesRequestBody, GetArticlesByCategoryRequestBody };
+type GetArticlesByTagRequestBody = GetAllArticlesRequestBody & {
+  tag: string;
+};
+
+export type {
+  GetAllArticlesRequestBody,
+  GetArticlesByCategoryRequestBody,
+  GetArticlesByTagRequestBody,
+};

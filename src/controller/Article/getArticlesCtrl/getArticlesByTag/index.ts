@@ -1,34 +1,34 @@
 import { Request, Response } from "express";
 import Article from "../../../../models/articlesModels";
 import expressAsyncHandler from "express-async-handler";
-import { GetArticlesByCategoryRequestBody } from "constants/articles-type";
+import { GetArticlesByTagRequestBody } from "constants/articles-type";
 import { matchLookupFunc } from "./_helper/matchLookup";
 import { lookupPipeline } from "../_helper/relationshipPipeline";
 import { handleLimit } from "../_helper/handleLimit";
-import CategoryModels from "../../../../models/categoryModels";
+import TagModals from "../../../../models/tagModels";
 import mongoose from "mongoose";
 
 // Get Articles by categories
-const getArticlesByCategory = expressAsyncHandler(
+const getArticlesByTag = expressAsyncHandler(
   async (
-    req: Request<unknown, unknown, unknown, GetArticlesByCategoryRequestBody>,
+    req: Request<unknown, unknown, unknown, GetArticlesByTagRequestBody>,
     res: Response
   ) => {
     try {
-      if (!req.query.category) throw new Error("Category id not provided");
-      const category = await CategoryModels.findOne({
-        slug: req.query.category,
+      if (!req.query.tag) throw new Error("Tag id not provided");
+      const tag = await TagModals.findOne({
+        slug: req.query.tag,
       });
-      if (!category) throw new Error("Category not found");
+      if (!tag) throw new Error("Tag not found");
       const { limit, maxLimit } = handleLimit(req.query.limit);
       const page = Number(req.query.page || 1);
       const count = await Article.find({
-        categories: {
-          $in: [new mongoose.Types.ObjectId(category._id as string)],
+        tags: {
+          $in: [new mongoose.Types.ObjectId(tag._id as string)],
         },
       }).countDocuments();
       const articles = await Article.aggregate([
-        ...matchLookupFunc(category._id as string),
+        ...matchLookupFunc(tag._id as string),
         ...lookupPipeline,
       ])
         .sort({ createdAt: req.query.sort || "desc" })
@@ -47,4 +47,4 @@ const getArticlesByCategory = expressAsyncHandler(
   }
 );
 
-export { getArticlesByCategory };
+export { getArticlesByTag };

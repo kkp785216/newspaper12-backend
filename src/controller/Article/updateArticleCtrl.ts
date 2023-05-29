@@ -10,10 +10,9 @@ import validateMongoDbId from "../../utils/validateMondoDbId";
 /* TO DO: make it for update article it is currently for add article */
 
 // add Article
-const addNewArticle = expressAsyncHandler(
+const updateArticle = expressAsyncHandler(
   async (
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    req: Request<unknown, unknown, ArticleRequestBody> & {
+    req: Request<{ slug: string }, unknown, ArticleRequestBody> & {
       user?: UserProfileResponse;
     },
     res: Response
@@ -51,31 +50,33 @@ const addNewArticle = expressAsyncHandler(
         const checkTags = await Tags.find({
           _id: { $in: tags },
         });
-        if (checkTags.length !== categories.length)
+        if (checkTags.length !== tags.length)
           throw new Error("Tags doesn't exist");
       }
 
-      // creating a new Article instanse
-      const article = new Article({
-        categories: categories || [],
-        tags: tags || [],
-        title: title,
-        author: userId,
-        status: status || "published",
-        url: convertTitleToSlug(url),
-        ...(imgUrl && { imgUrl }),
-        ...(content && { content }),
-        ...(contentType && { contentType }),
-        template: template || 0,
-        allowComment: allowComment || true,
-      });
-      //save new article into database
-      const response = await article.save();
-      res.status(200).json(response);
+      // updating existing article from db
+      const article = await Article.findOneAndUpdate(
+        { url: req.params.slug },
+        {
+          ...(categories && { categories }),
+          ...(tags && { tags }),
+          ...(title && { title }),
+          ...(userId && { author: userId }),
+          ...(status && { status }),
+          ...(url && { url: convertTitleToSlug(url) }),
+          ...(imgUrl && { imgUrl }),
+          ...(content && { content }),
+          ...(contentType && { contentType }),
+          ...(template && { template }),
+          ...(allowComment && { allowComment }),
+        },
+        { new: true }
+      );
+      res.status(200).json(article);
     } catch (error) {
       throw new Error(error as string);
     }
   }
 );
 
-export { addNewArticle };
+export { updateArticle };
