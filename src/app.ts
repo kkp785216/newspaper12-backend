@@ -5,6 +5,7 @@ import authRouter from "./routes/authRoute";
 import userRouter from "./routes/User/userRoute";
 import adminRouter from "./routes/Admin/adminRoute";
 import { errorHandler, notFound } from "./middlewares/errorHandler";
+import { corsFnc } from "./utils/cors";
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,8 @@ void dbConnect();
 
 // RequestBodyParser - it parse api request body
 app.use(express.json());
+
+app.all("*", corsFnc);
 
 // serving -  {{newspaper-public-host}} Create User, Login User
 app.use("/api/public", publicRouter);
