@@ -1,4 +1,4 @@
-import mongoose, { Document } from "mongoose"; // Erase if already required
+import mongoose, { Document, Schema } from "mongoose"; // Erase if already required
 import type { CategoryRequestBody } from "../constants/types";
 
 interface CategoryModelWithDocument extends CategoryRequestBody, Document {}
@@ -18,6 +18,7 @@ const categorySchema = new mongoose.Schema<CategoryModelWithDocument>(
       message: "slug not provided",
     },
     description: { type: String, default: null },
+    parent: { type: Schema.Types.ObjectId, default: null },
   },
   { timestamps: true }
 );

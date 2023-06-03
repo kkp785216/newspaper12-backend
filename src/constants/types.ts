@@ -28,9 +28,10 @@ type CategoryRequestBody = {
   name: string;
   slug: string;
   description?: string;
+  parent?: string;
 };
 
-type TagRequestBody = CategoryRequestBody;
+type TagRequestBody = Omit<CategoryRequestBody, "parent">;
 
 type LoginRequestBody = {
   email: string;
