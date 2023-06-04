@@ -1,13 +1,21 @@
 import { NextFunction, Request, Response } from "express";
 
 const cors = {
-  origin: ["http://localhost:3000", "https://newspaper12-backend.vercel.app"],
+  origin: [
+    /^(?:https?:\/\/)?localhost(:\d+)?$/,
+    /^(?:https?:\/\/)?((www\.)?[\w-]+\.)vercel\.app$/,
+  ],
 };
 
 const corsFnc = (req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin;
-  if (cors.origin?.indexOf(origin as string) >= 0) {
-    res.header("Access-Control-Allow-Origin", origin);
+  if (origin) {
+    for (const allowedOrigin of cors.origin) {
+      if (allowedOrigin.test(origin)) {
+        res.header("Access-Control-Allow-Origin", origin);
+        break;
+      }
+    }
   }
   res.header(
     "Access-Control-Allow-Headers",
