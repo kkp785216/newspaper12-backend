@@ -6,7 +6,7 @@ type ArticleRequestBody = {
   title: string;
   description: string;
   author: ObjectId;
-  status: "published" | "draft";
+  status: "published" | "draft" | "trash";
   views: number;
   url: string;
   imgUrl: null | string;
@@ -14,6 +14,7 @@ type ArticleRequestBody = {
   contentType: ContentType;
   template: number;
   allowComment: boolean;
+  publishedAt: string;
 };
 
 type GetAllArticlesResponse = {

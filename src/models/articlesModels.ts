@@ -21,7 +21,7 @@ const articleSchema = new mongoose.Schema<ArticleModelWithDocument>(
       type: String,
       require: true,
       enum: {
-        values: ["published", "draft"],
+        values: ["published", "draft", "trash"],
         message: "status '{VALUE}' is not supported",
       },
       default: "published",
@@ -49,6 +49,11 @@ const articleSchema = new mongoose.Schema<ArticleModelWithDocument>(
     },
     template: { type: Number, default: 0 },
     allowComment: { type: Boolean, default: true },
+    publishedAt: {
+      type: String,
+      required: true,
+      message: "please provide publish date",
+    },
   },
   { timestamps: true }
 );

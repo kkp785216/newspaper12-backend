@@ -28,6 +28,6 @@ router.use("/tag", tagRouter);
 router.post("/login", loginAdmin);
 
 // request and route for get user Profile
-router.use("/upload", uploadRouter);
+router.use("/upload", authMiddleware, isAdmin, uploadRouter);
 
 export default router;
