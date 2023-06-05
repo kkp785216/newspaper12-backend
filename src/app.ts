@@ -5,7 +5,7 @@ import authRouter from "./routes/authRoute";
 import userRouter from "./routes/User/userRoute";
 import adminRouter from "./routes/Admin/adminRoute";
 import { errorHandler, notFound } from "./middlewares/errorHandler";
-import { corsFnc } from "./utils/cors";
+import cors from "cors";
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +16,8 @@ void dbConnect();
 // RequestBodyParser - it parse api request body
 app.use(express.json());
 
-app.all("*", corsFnc);
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+app.use(cors());
 
 // serving -  {{newspaper-public-host}} Create User, Login User
 app.use("/api/public", publicRouter);

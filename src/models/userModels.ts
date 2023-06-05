@@ -12,7 +12,9 @@ type TypeAuthUser = Document &
   };
 
 // Declare the Schema of the User model
-const userSchema = new mongoose.Schema<UserProfileRequestBody>({
+const userSchema = new mongoose.Schema<
+  UserProfileRequestBody & { refreshToken: string }
+>({
   firstName: {
     type: String,
     required: true,
@@ -54,6 +56,9 @@ const userSchema = new mongoose.Schema<UserProfileRequestBody>({
       message: "role '{VALUE}' not supported!",
     },
     default: "user",
+  },
+  refreshToken: {
+    type: String,
   },
 });
 

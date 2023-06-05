@@ -1,5 +1,9 @@
 import express from "express";
-import { createRegularUser, loginUser } from "../controller/authCtrl";
+import {
+  createRegularUser,
+  handleRefreshToken,
+  loginUser,
+} from "../controller/authCtrl";
 
 const router = express.Router();
 
@@ -8,5 +12,7 @@ router.post("/register", createRegularUser);
 
 // route for login existing user
 router.post("/login", loginUser);
+
+router.post("/refreshtoken", handleRefreshToken);
 
 export default router;

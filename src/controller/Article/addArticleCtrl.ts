@@ -32,6 +32,7 @@ const addNewArticle = expressAsyncHandler(
         contentType,
         template,
         allowComment,
+        publishedAt,
       } = req.body;
 
       // checking if categories exist in database
@@ -60,11 +61,12 @@ const addNewArticle = expressAsyncHandler(
         author: userId,
         status: status || "published",
         url: convertTitleToSlug(url),
-        ...(imgUrl && { imgUrl }),
+        imgUrl,
         ...(content && { content }),
         ...(contentType && { contentType }),
         template: template || 0,
         allowComment: allowComment || true,
+        publishedAt,
       });
       //save new article into database
       const response = await article.save();

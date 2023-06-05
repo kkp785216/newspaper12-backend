@@ -34,6 +34,7 @@ const updateArticle = expressAsyncHandler(
         contentType,
         template,
         allowComment,
+        publishedAt,
       } = req.body;
 
       // checking if categories exist in database
@@ -69,6 +70,7 @@ const updateArticle = expressAsyncHandler(
           ...(contentType && { contentType }),
           ...(template && { template }),
           ...(allowComment && { allowComment }),
+          ...(publishedAt && { publishedAt }),
         },
         { new: true }
       );
