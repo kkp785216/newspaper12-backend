@@ -6,6 +6,7 @@ import { createUserByAdmin, loginAdmin } from "../../controller/authCtrl";
 import { authMiddleware, isAdmin } from "../../middlewares/authMiddleware";
 import tagRouter from "./Subroute/tagRoute";
 import uploadRouter from "./Subroute/uploadRoute";
+import authorRouter from "./Subroute/authorsRoute";
 
 const router = express.Router();
 
@@ -29,5 +30,8 @@ router.post("/login", loginAdmin);
 
 // request and route for get user Profile
 router.use("/upload", authMiddleware, isAdmin, uploadRouter);
+
+// request and route for get user Profile
+router.use("/authors", authMiddleware, isAdmin, authorRouter);
 
 export default router;
