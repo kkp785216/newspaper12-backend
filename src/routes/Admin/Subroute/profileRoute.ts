@@ -1,12 +1,16 @@
 import express from "express";
 import {
   deleteProfile,
+  getMyProfile,
   getProfile,
   updateProfile,
 } from "../../../controller/adminCtrl";
 import { authMiddleware, isAdmin } from "../../../middlewares/authMiddleware";
 
 const router = express.Router();
+
+// request and route for get user Profile
+router.get("/", authMiddleware, isAdmin, getMyProfile);
 
 // request and route for get user Profile
 router.get("/:id", authMiddleware, isAdmin, getProfile);
