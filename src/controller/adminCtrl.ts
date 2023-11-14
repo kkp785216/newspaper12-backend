@@ -2,7 +2,30 @@ import { Request, Response } from "express";
 import User from "../models/userModels";
 import expressAsyncHandler from "express-async-handler";
 import validateMongoDbId from "../utils/validateMondoDbId";
-import { UserProfileRequestBody } from "../constants/types";
+import {
+  UserProfileRequestBody,
+  UserProfileResponse,
+} from "../constants/types";
+
+// Get user profile
+const getMyProfile = expressAsyncHandler(
+  async (req: Request & { user?: UserProfileResponse }, res: Response) => {
+    const user = req.user;
+    if (!user) throw new Error("no user found");
+    try {
+      const findUser = await User.findById(user._id).select("-password");
+      if (findUser) {
+        // Send User Profile without Except Password
+        res.send(findUser);
+      } else {
+        // User already exist
+        throw new Error("User doesn't exist");
+      }
+    } catch (error) {
+      throw new Error(error as string);
+    }
+  }
+);
 
 // Get user profile
 const getProfile = expressAsyncHandler(async (req: Request, res: Response) => {
@@ -91,4 +114,4 @@ const deleteProfile = expressAsyncHandler(
   }
 );
 
-export { getProfile, deleteProfile, updateProfile };
+export { getProfile, deleteProfile, updateProfile, getMyProfile };
