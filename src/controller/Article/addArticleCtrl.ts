@@ -52,6 +52,8 @@ const addNewArticle = expressAsyncHandler(
         if (checkTags.length !== categories.length)
           throw new Error("Tags doesn't exist");
       }
+      if (url !== convertTitleToSlug(url))
+        throw new Error("url is not in the right format");
 
       // creating a new Article instanse
       const article = new Article({
@@ -60,7 +62,7 @@ const addNewArticle = expressAsyncHandler(
         title: title,
         author: userId,
         status: status || "published",
-        url: convertTitleToSlug(url),
+        url: url,
         imgUrl,
         ...(content && { content }),
         ...(contentType && { contentType }),

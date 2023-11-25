@@ -18,12 +18,12 @@ const getAllCategories = expressAsyncHandler(
 
 const getSingleCategory = expressAsyncHandler(
   async (
-    req: Request<{ id: string }, unknown, unknown, unknown>,
+    req: Request<{ slug: string }, unknown, unknown, unknown>,
     res: Response
   ) => {
-    const categoryId = req.params.id;
+    const slug = req.params.slug;
     try {
-      const category = await Category.findById(categoryId);
+      const category = await Category.findOne({ slug });
       res.status(200).json(category);
     } catch (error) {
       throw new Error(error as string);
@@ -45,12 +45,14 @@ const addNewCategory = expressAsyncHandler(
     if (!name) errArray.push("name not provided");
     if (!slug) errArray.push("slug not provided");
     if (errArray.length > 0) throw new Error(errArray.join(", "));
+    if (slug !== convertTitleToSlug(slug))
+      throw new Error("slug is not in the right format");
 
     try {
       // creating new category instanse
       const category = new Category({
         name: name,
-        slug: convertTitleToSlug(slug),
+        slug: slug,
         description: description || null,
       });
       //saving to database

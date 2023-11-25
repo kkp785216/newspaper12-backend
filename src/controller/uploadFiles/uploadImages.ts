@@ -4,6 +4,7 @@ import multer, { FileFilterCallback } from "multer";
 import sharp from "sharp";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../lib/firebase";
+import convertTitleToSlug from "../../utils/formatSlug";
 
 type ImagesResponse = {
   success: string;
@@ -93,6 +94,8 @@ const resizeImages = expressAsyncHandler(
       ((): Express.Multer.File[] => req.files as Express.Multer.File[])().map(
         async (file) => {
           const uniqueSuffix =
+            convertTitleToSlug(file.originalname.replace(/\.[^/.]+$/, "")) +
+            "-" +
             Date.now().toString() +
             "-" +
             Math.round(Math.random() * 1e9).toString() +

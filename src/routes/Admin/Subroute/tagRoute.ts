@@ -1,16 +1,10 @@
 import express from "express";
-import {
-  addNewTag,
-  getAllTags,
-  getSingleTag,
-} from "../../../controller/tagCtrl";
+import { addNewTag, getSingleTag } from "../../../controller/tagCtrl";
 import { authMiddleware, isAdmin } from "../../../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", getAllTags);
-
-router.get("/:id", getSingleTag);
+router.get("/:slug", getSingleTag);
 
 router.post("/", authMiddleware, isAdmin, addNewTag);
 

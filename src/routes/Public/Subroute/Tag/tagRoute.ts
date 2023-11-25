@@ -4,6 +4,6 @@ import { getSingleTag } from "../../../../controller/tagCtrl";
 const router = express.Router();
 
 // getAllArticles by page and limit query
-router.get("/:id", getSingleTag);
+router.get("/:slug", getSingleTag);
 
 export default router;

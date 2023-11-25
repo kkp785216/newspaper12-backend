@@ -9,9 +9,9 @@ const router = express.Router();
 router.get("/all", getAllArticles);
 
 // get articles using category
-router.get("/bycategory", getArticlesByCategory);
+router.get("/category/:slug", getArticlesByCategory);
 
 // get articles using tag
-router.get("/bytag", getArticlesByTag);
+router.get("/tag/:slug", getArticlesByTag);
 
 export default router;

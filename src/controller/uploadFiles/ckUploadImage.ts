@@ -40,7 +40,7 @@ const upload = multer({
 });
 
 /** uploadFile middleware */
-const uploadFile = upload.single("image");
+const uploadFile = upload.single("upload");
 
 /** uploadFile middleware with error handler */
 const uploadImage = (req: Request, res: Response, next: NextFunction) => {
@@ -92,25 +92,10 @@ const resizeImage = expressAsyncHandler(
       const filePromises = [
         // Original size
         { name: uniqueSuffix, buffer: req.file.buffer },
-        // 150x150
+        // 1024xauto
         {
-          name: `${uniqueSuffix}-150x150.webp`,
-          buffer: await imageResizer(req.file, 150, 150),
-        },
-        // 485x360
-        {
-          name: `${uniqueSuffix}-485x360.webp`,
-          buffer: await imageResizer(req.file, 485, 360),
-        },
-        // 218x150
-        {
-          name: `${uniqueSuffix}-218x150.webp`,
-          buffer: await imageResizer(req.file, 218, 150),
-        },
-        // 696xauto
-        {
-          name: `${uniqueSuffix}-696xauto.webp`,
-          buffer: await imageResizer(req.file, 696, null),
+          name: `${uniqueSuffix}-1024xauto.webp`,
+          buffer: await imageResizer(req.file, 1024, null),
         },
       ];
       const images: { name: string; downloadURL: string }[] = [];
@@ -144,9 +129,11 @@ const getResult = expressAsyncHandler(
   ) => {
     if (!req.body.images) throw new Error("Internal Server error");
     res.send({
-      ...req.body.images,
+      url: req.body.images.images.find(
+        (e) => (e.name = req.body.images.filename + "-1024xauto.webp")
+      )?.downloadURL,
     });
   }
 );
 
-export { uploadImage, resizeImage, getResult };
+export default { uploadImage, resizeImage, getResult };

@@ -24,7 +24,7 @@ const articleSchema = new mongoose.Schema<ArticleModelWithDocument>(
         values: ["published", "draft", "trash"],
         message: "status '{VALUE}' is not supported",
       },
-      default: "published",
+      default: "draft",
     },
     views: { type: Number, default: 0 },
     url: {
@@ -53,6 +53,7 @@ const articleSchema = new mongoose.Schema<ArticleModelWithDocument>(
       type: String,
       required: true,
       message: "please provide publish date",
+      default: new Date().toISOString(),
     },
   },
   { timestamps: true }
